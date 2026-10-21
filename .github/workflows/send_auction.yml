@@ -1,0 +1,24 @@
+name: Send Weekly Auction Briefing
+
+on:
+  workflow_dispatch: # Actions 탭에서 버튼으로 수동 즉시 실행 가능하게 함
+
+jobs:
+  send-mail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 코드 가져오기
+        uses: actions/checkout@v4
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 라이브러리 설치
+        run: pip install resend
+
+      - name: 메일 발송 스크립트 실행
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python main.py
