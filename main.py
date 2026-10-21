@@ -2,7 +2,7 @@ import os
 import resend
 
 # GitHub Secrets에 등록한 API 키 자동 로드
-resend.api_key = os.environ.get("ATfeed")
+resend.api_key = os.environ.get("RESEND_API_KEY")
 
 # 메일을 받을 본인 이메일 주소 (Resend 가입 메일)
 TARGET_EMAIL = "jb591664@gmail.com"  # <--- 본인 이메일로 수정!
