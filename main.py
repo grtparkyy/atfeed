@@ -8,8 +8,8 @@ resend.api_key = os.environ.get("RESEND_API_KEY")
 # 수신자 이메일 주소 (본인 작업용 이메일)
 TARGET_EMAIL = "jb591664@gmail.com"  # <--- 본인 이메일 유지
 
-# 1. parser 모듈 실행: '경기' -> '제주'로 변경
-items = parse_auction_data(region="제주", property_type="아파트", min_discount_rate=20)
+# 1. parser 모듈 실행: '제주' -> '전국'로 변경
+items = parse_auction_data(region="", property_type="아파트", min_discount_rate=20)
 
 # 2. 물건 목록 HTML 동적 생성
 cards_html = ""
