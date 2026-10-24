@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-def parse_auction_data(region="제주", property_type="아파트", min_discount_rate=20):
+def parse_auction_data(region="", property_type="아파트", min_discount_rate=20):
     session = requests.Session()
     session.headers.update({
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
