@@ -1,17 +1,17 @@
 import os
 import resend
-from parser import parse_auction_data  # parser.py의 필터링 알고리즘 불러오기
+from parser import parse_auction_data
 
 # GitHub Secrets에서 API 키 로드
 resend.api_key = os.environ.get("RESEND_API_KEY")
 
 # 수신자 이메일 주소 (본인 작업용 이메일)
-TARGET_EMAIL = "jb591664@gmail.com"  # <--- 본인 이메일로 유지
+TARGET_EMAIL = "jb591664@gmail.com"  # <--- 본인 이메일 유지
 
-# 1. parser 모듈을 실행해 위험 권리가 배제된 알짜 물건만 수집
-items = parse_auction_data(region="경기", property_type="아파트", min_discount_rate=20)
+# 1. parser 모듈 실행: '경기' -> '제주'로 변경
+items = parse_auction_data(region="제주", property_type="아파트", min_discount_rate=20)
 
-# 2. 물건 목록 HTML을 반복문(for)으로 동적 생성 (하드코딩 제거)
+# 2. 물건 목록 HTML 동적 생성
 cards_html = ""
 for item in items:
     cards_html += f"""
@@ -42,17 +42,17 @@ for item in items:
     </div>
     """
 
-# 3. 전체 이메일 템플릿 조립 (cards_html 자리에 동적 주입)
+# 3. 전체 이메일 템플릿
 html_content = f"""
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px 16px; color: #1e293b;">
   
   <div style="margin-bottom: 24px; text-align: center;">
     <span style="font-size: 11px; font-weight: 700; color: #4f46e5; background: #eef2ff; padding: 4px 12px; border-radius: 9999px;">AI AUCTION BRIEFING</span>
     <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 10px 0 4px 0;">주간 맞춤 알짜 경매 브리핑</h2>
-    <p style="font-size: 12px; color: #64748b; margin: 0;">선택 조건: [경기 / 아파트 / 할인율 20% 이상]</p>
+    <p style="font-size: 12px; color: #64748b; margin: 0;">선택 조건: [제주 / 아파트 / 할인율 20% 이상]</p>
   </div>
 
-  <!-- [필독] 현장 임장 필수 권고 배너 유지 -->
+  <!-- [필독] 현장 임장 필수 안내 배너 -->
   <div style="background-color: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #d97706; border-radius: 8px; padding: 14px 16px; margin-bottom: 24px;">
     <div style="font-size: 13px; font-weight: 700; color: #b45309; margin-bottom: 4px;">
       ⚠️ [필독] 입찰 전 현장 임장(현장 확인) 필수 안내
@@ -62,7 +62,6 @@ html_content = f"""
     </div>
   </div>
 
-  <!-- 알고리즘이 뽑아낸 물건 카드가 들어가는 자리 -->
   {cards_html}
 
   <div style="text-align: center; font-size: 10px; color: #94a3b8; margin-top: 24px;">
@@ -76,7 +75,7 @@ html_content = f"""
 params = {
     "from": "Auction Curation <onboarding@resend.dev>",
     "to": [TARGET_EMAIL],
-    "subject": f"[맞춤 경매 브리핑] 이번 주 선별 알짜 물건 ({len(items)}건)",
+    "subject": f"[제주 맞춤 경매] 이번 주 선별 알짜 물건 ({len(items)}건)",
     "html": html_content,
 }
 
