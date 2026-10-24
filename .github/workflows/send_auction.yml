@@ -16,7 +16,7 @@ jobs:
           python-version: '3.11'
 
       - name: 라이브러리 설치
-        run: pip install resend
+        run: pip install resend requests beautifulsoup4  # <-- requests와 beautifulsoup4 추가!
 
       - name: 메일 발송 스크립트 실행
         env:
